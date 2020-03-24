@@ -1,0 +1,23 @@
+{
+  "name": "chatwood",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "mongo-start": "sudo systemctl start mongod",
+    "mongo-stop": "sudo systemctl stop mongod"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-edge": "^2.0.2",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.9.6",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
