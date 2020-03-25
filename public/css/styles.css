@@ -1,0 +1,238 @@
+/* General Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+input {
+    font-size: 14px;
+}
+
+body {
+    line-height: 1.4;
+    color: #333333;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #606770;
+}
+
+input {
+    border: 1px solid #eeeeee;
+    padding: 12px;
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+    padding: 12px;
+    background: #7C5CBF;
+    border: none;
+    color: white;
+    font-size: 16px;
+    transition: background .3s ease;
+}
+
+button:hover {
+    background: #6b47b8;
+}
+
+button:disabled {
+    cursor: default;
+    background: #7c5cbf94;
+}
+
+/* Join Page Styles */
+
+.centered-form {
+    background: #333744;
+    width: 100vw;
+    height: 100vh;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centered-form__box {
+    box-shadow: 0px 0px 17px 1px #1D1F26;
+    background: #F7F7FA;
+    padding: 24px;
+    width: 250px;
+}
+
+.centered-form button {
+    width: 100%;
+}
+
+.centered-form input {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+/* Chat Page Layout */
+
+.chat {
+    display: flex;
+}
+
+.chat__sidebar {
+    height: 100vh;
+    width: 26%;
+    color: white;
+    background: #fff;
+    overflow-y: scroll
+}
+
+.chat__sidebar .sidebar-header {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    font-family: lato;
+    height: 60px;
+    overflow: hidden;
+    font-size: 24px;
+    padding: 10px 16px 10px 16px;
+}
+
+.chat__sidebar .sidebar-header > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.chat__sidebar .sidebar-header .sidebar-search-box {
+    padding: 4px 16px 12px;
+    display: block;
+}
+.chat__sidebar .search-box {
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: default;
+    display: inline-block;
+    font-weight: normal;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+}
+.chat__sidebar .search-bar {
+    margin: 4px 16px 12px;
+    background-color: rgba(0, 0, 0, .04);
+    border-radius: 50px;
+    font-size: 15px;
+    height: 36px;
+}
+
+.chat__sidebar input {
+    box-sizing: border-box;
+    font-family: lato;
+    font-size: 14px;
+    line-height: 30px;
+    padding: 0 28px !important;
+    margin-top: 3.4px;
+    max-width: 430px;
+    background: transparent;
+    width: 100%;
+    font-weight: normal;
+    border: 0;
+}
+
+
+/* Chat styles */
+
+.chat__main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+}
+
+.chat__messages {
+    flex-grow: 1;
+    padding: 24px 24px 0 24px;
+    overflow-y: scroll;
+}
+
+/* Message Styles */
+
+.message {
+    margin-bottom: 16px;   
+}
+
+.message__name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.message__meta {
+    color: #777;
+    font-size: 14px;
+}
+
+.message a {
+    color: #0070CC;
+}
+
+/* Message Composition Styles */
+
+.compose {
+    display: flex;
+    flex-shrink: 0;
+    margin-top: 16px;
+    padding: 24px;
+}
+
+.compose form {
+    display: flex;
+    flex-grow: 1;
+    margin-right: 16px;
+}
+
+.compose input {
+    border: 1px solid #eeeeee;
+    width: 100%;
+    padding: 12px;
+    margin: 0 16px 0 0;
+    flex-grow: 1;
+}
+
+.compose button {
+    font-size: 14px;
+}
+
+/* Chat Sidebar Styles */
+
+.room-title {
+    color: rgba(0, 0, 0, 1);
+    font-size: 24px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all .25s; 
+}
+
+.list-title {
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 4px;
+    padding: 12px 24px 0 24px;
+}
+
+.users {
+    list-style-type: none;
+    font-weight: 300;
+    padding: 12px 24px 0 24px;
+}
