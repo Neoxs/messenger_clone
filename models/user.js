@@ -39,7 +39,19 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Age must be a postive number')
             }
         }
-    }
+    },
+    friends: [{
+        userId: {
+            type: String,
+            required: true,
+            ref: 'User'
+        },
+        roomId: {
+            type: String,
+            required: true,
+            ref: 'Room'
+        }
+    }]
 })
 
 // userSchema.methods.toJSON = function () {
