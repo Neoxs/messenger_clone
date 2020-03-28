@@ -30,6 +30,23 @@ router.post('/add-friend/:id', async (req, res) => {
     }
 })
 
+router.get('/chat', async(req, res) => {
+    try {
+        const user = await User.findById(req.user._id).populate('friends.userId')
+        res.render('chat', {
+            path: '/chat',
+            pageTitle: 'chat',
+            user: user,
+            error: req.flash[0],
+            contacts: user.friends,
+            isAuthenticated: req.isAuthenticated()
+        })
+    }catch(err){
+        console.log(err.message)
+        res.status(400).send(err.message)
+    }
+})
+
 router.get('/user/friends', async (req, res) => {
     try {
         const user = await User.findById(req.user._id).populate('friends.userId')

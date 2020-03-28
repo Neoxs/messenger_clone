@@ -8,6 +8,7 @@
 
 html {
     font-size: 16px;
+    font-family: lato;
 }
 
 input {
@@ -18,6 +19,25 @@ body {
     line-height: 1.4;
     color: #333333;
     font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.3); 
+    
 }
 
 
@@ -88,10 +108,11 @@ button:disabled {
 
 .chat__sidebar {
     height: 100vh;
-    width: 26%;
+    width: 25%;
     color: white;
     background: #fff;
-    overflow-y: scroll
+    overflow: hidden;
+    border-right: 0.5px solid rgba(0, 0, 0, 0.3)
 }
 
 .chat__sidebar .sidebar-header {
@@ -127,6 +148,14 @@ button:disabled {
     position: relative;
     vertical-align: middle;
 }
+
+.chat__sidebar .sidebar-body {
+    height: 90vh;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden
+}
+
 .chat__sidebar .search-bar {
     margin: 4px 16px 12px;
     background-color: rgba(0, 0, 0, .04);
@@ -140,16 +169,75 @@ button:disabled {
     font-family: lato;
     font-size: 14px;
     line-height: 30px;
-    padding: 0 28px !important;
+    padding: 0 0px !important;
     margin-top: 3.4px;
     max-width: 430px;
     background: transparent;
-    width: 100%;
+    width: 80%;
     font-weight: normal;
     border: 0;
 }
 
+svg.svg-inline--fa.fa-search.fa-w-16 {
+    width: 15%;
+}
 
+/* Conversations style */
+.conversations .conversation-list .conversation-list-item {
+    background-color: white;
+    padding: 10px 0px;
+    overflow-x: hidden;
+    box-sizing: inherit
+}
+
+.conversation-list-item .conversation-img {
+    max-width: 85px;
+    margin-left: 10px;
+}
+
+.conversation-img img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.conversation-list-item .conversation-content {
+    padding-right: 0px;
+    color: #999999;
+}
+
+.conversation-list-item .conversation-list-item-title {
+    margin-bottom: 0px;
+    font-weight: inherit;
+    color: black;
+}
+
+.conversation-content .conversation-list-item-message {
+    font-size: 13px;
+}
+
+.contacts-title{
+    align-items: center;
+    background-color: transparent;
+    color: rgba(0, 0, 0, .34);
+    display: flex;
+    font-size: 13px;
+    font-weight: bold;
+    
+    height: 32px;
+    padding: 0 16px;
+    padding-top: 8px;
+    text-transform: uppercase;
+}
+
+.message-unread {
+    font-weight: bold !important;
+    color: black !important;
+}
+
+.message-active {
+    background-color: rgba(0, 0, 0, .05) !important;
+}
 /* Chat styles */
 
 .chat__main {

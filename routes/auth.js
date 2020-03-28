@@ -7,12 +7,13 @@ const authController = require("../controllers/auth");
 
 //handling requests
 router.get("/login", (req, res) => {
-	res.send({ error: req.flash("loginMessage")[0] });
+	res.render('auth/login',{ error: req.flash("loginMessage")[0], isAuthenticated: req.isAuthenticated() });
 });
 
 router.post(
 	"/login",
 	passport.authenticate("local", {
+		successRedirect: "/chat",
 		failureRedirect: "/login",
 		failureFlash: true,
 	})
@@ -26,7 +27,7 @@ router.post("/logout", (req, res, next) => {
 			if (err) {
 				next(err);
 			} else {
-				return res.redirect("/");
+				return res.redirect("/login");
 			}
 		});
 	}
@@ -35,6 +36,10 @@ router.post("/logout", (req, res, next) => {
 
 
 router.post("/register", authController.postSignup);
+
+router.get('/register', (req, res) => {
+	res.render('auth/signup',{ error: req.flash("loginMessage")[0], isAuthenticated: req.isAuthenticated() });
+})
 
 
 module.exports = router;
