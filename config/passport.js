@@ -49,16 +49,12 @@ passport.use(
 										false,
 										req.flash(
 											"loginMessage",
-											"Wrong credentials2"
+											"Wrong credentials"
 										)
 									);
 								} else {
                                     return done(null,
-                                                user,
-                                                req.flash(
-                                                    "loginMessage",
-                                                    "successful !"
-                                                ));
+                                                user);
 								}
 							});
 					}

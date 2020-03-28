@@ -37,7 +37,6 @@ router.get('/chat', async(req, res) => {
             path: '/chat',
             pageTitle: 'chat',
             user: user,
-            error: req.flash[0],
             contacts: user.friends,
             isAuthenticated: req.isAuthenticated()
         })

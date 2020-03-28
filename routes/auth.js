@@ -38,7 +38,7 @@ router.post("/logout", (req, res, next) => {
 router.post("/register", authController.postSignup);
 
 router.get('/register', (req, res) => {
-	res.render('auth/signup',{ error: req.flash("loginMessage")[0], isAuthenticated: req.isAuthenticated() });
+	res.render('auth/signup',{ error: req.flash("registerMessage")[0], isAuthenticated: req.isAuthenticated() });
 })
 
 

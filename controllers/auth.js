@@ -13,17 +13,20 @@ exports.postSignup = async(req, res) => {
     const isValid = (password === confirmPassword)
  
     if(!isValid) {
-       res.status(500).send('Password does not match')
+        req.flash('registerMessage', 'Password does not match')
+        res.redirect('/register')
     } else {
        delete req.body.confirmPassword
        const user = new User(req.body)
  
        try {
              await user.save()
-             res.send(user)
+             req.flash('loginMessage', 'Your account has been seccessfuly created !')
+             res.redirect('/login')
        } catch (err) {
              console.log(err)
-             res.send(err.message)
+             req.flash('registerMessage', 'Something went wrong !')
+             res.redirect('/register')
        }
     }
  

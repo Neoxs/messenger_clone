@@ -22,11 +22,11 @@
                     </div>
                     <ul class="conversation-list">
                         @each(contact in contacts)
-                        <li class="row conversation-list-item">
-                                <div class="col-4 row align-self-center justify-content-center conversation-img">
+                        <li class="row conversation-list-item" data-roomId="{{contact.roomId}}" data-id="{{contact.userId._id}}">
+                                <div class="col-2 row align-self-center justify-content-center contact-img">
                                     <img src="/img/fem-avatar.svg" alt="avatar">
                                 </div>
-                                <div class="col-10 row align-self-center conversation-content" data-id="{{contact.userId._id}}">
+                                <div class="col row align-self-center contact-username">
                                         {{contact.userId.username}}  
                                 </div>
                             </li>

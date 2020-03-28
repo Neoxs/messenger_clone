@@ -18,7 +18,7 @@ input {
 body {
     line-height: 1.4;
     color: #333333;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: lato;
 }
 
 /* Let's get this party started */
@@ -223,13 +223,27 @@ svg.svg-inline--fa.fa-search.fa-w-16 {
     display: flex;
     font-size: 13px;
     font-weight: bold;
-    
     height: 32px;
     padding: 0 16px;
     padding-top: 8px;
     text-transform: uppercase;
 }
 
+.contact-img {
+    margin-left: 15px
+}
+
+.contact-img img {
+    width: 35px;
+    height: 35px;
+    margin-right: 0px;
+}
+
+.contact-username {
+    font-size: 15px;
+    margin-left: 0px;
+    color: black
+}
 .message-unread {
     font-weight: bold !important;
     color: black !important;
