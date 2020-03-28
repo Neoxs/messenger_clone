@@ -13,16 +13,19 @@
                 <span class="sidebar-search-box">
                     <label class="search-bar">
                         <i class="fas fa-search"></i>
-                        <input type="text" autocomplete="off" placeholder="Search Messenger">
+                        <input id="search-bar-input" type="text" autocomplete="off" placeholder="Search Messenger">
                     </label>
                 </span>
                 <div class="conversations">
                     <div class="contacts-title">
                         contacts
                     </div>
-                    <ul class="conversation-list">
+                    <ul class="contacts-list">
+
+                    </ul>
+                    <ul class="conversation-list convo-list">
                         @each(contact in contacts)
-                        <li class="row conversation-list-item" data-roomId="{{contact.roomId}}" data-id="{{contact.userId._id}}">
+                            <li class="row conversation-list-item" data-roomId="{{contact.roomId}}" data-id="{{contact.userId._id}}">
                                 <div class="col-2 row align-self-center justify-content-center contact-img">
                                     <img src="/img/fem-avatar.svg" alt="avatar">
                                 </div>

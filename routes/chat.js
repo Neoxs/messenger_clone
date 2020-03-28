@@ -55,4 +55,21 @@ router.get('/user/friends', async (req, res) => {
     }
 })
 
+router.post('/search',async (req, res) => {
+    
+    try {
+        if(req.body.email){
+            const users = await User.find({email: req.body.email})
+            res.send(users)
+        } else{
+            const users = await User.find({username: { $regex: `${req.body.username}\w*`, $options: 'i' } })            
+            res.send(users)
+        }
+        
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).send(err.message)
+    }
+})
+
 module.exports = router
