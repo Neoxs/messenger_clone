@@ -3,13 +3,17 @@ const router = new express.Router()
 const User = require('../models/user')
 const Room = require('../models/room')
 
+//middlewares
+const isAuth = require('../middlewares/isAuth')
+const isnAuth = require('../middlewares/isnAuth')
+
 
 //getting welcome "home" page and rendering the latest products on it
 router.get('/', (req, res) => {
-    res.render('chat')
+    res.redirect('/chat')
 })
 
-router.get('/add-friend/:id', async (req, res) => {
+router.get('/add-friend/:id', isAuth, async (req, res) => {
     const id = req.params.id
     try {
         const user = await User.findById(req.user._id)
@@ -30,7 +34,7 @@ router.get('/add-friend/:id', async (req, res) => {
     }
 })
 
-router.get('/chat', async(req, res) => {
+router.get('/chat', isAuth, async(req, res) => {
     try {
         const user = await User.findById(req.user._id).populate('friends.userId')
         res.render('chat', {
@@ -46,7 +50,7 @@ router.get('/chat', async(req, res) => {
     }
 })
 
-router.get('/user/friends', async (req, res) => {
+router.get('/user/friends', isAuth, async (req, res) => {
     try {
         const user = await User.findById(req.user._id).populate('friends.userId')
         res.send(user.friends)
@@ -55,7 +59,7 @@ router.get('/user/friends', async (req, res) => {
     }
 })
 
-router.post('/search',async (req, res) => {
+router.post('/search', isAuth, async (req, res) => {
     
     try {
         if(req.body.email){

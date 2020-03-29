@@ -3,15 +3,17 @@ const router = express.Router();
 const passport = require("../config/passport");
 const authController = require("../controllers/auth");
 
-
+//middlewares
+const isAuth = require('../middlewares/isAuth')
+const isnAuth = require('../middlewares/isnAuth')
 
 //handling requests
-router.get("/login", (req, res) => {
+router.get("/login", isnAuth, (req, res) => {
 	res.render('auth/login',{ error: req.flash("loginMessage")[0], isAuthenticated: req.isAuthenticated() });
 });
 
 router.post(
-	"/login",
+	"/login", isnAuth,
 	passport.authenticate("local", {
 		successRedirect: "/chat",
 		failureRedirect: "/login",
@@ -19,7 +21,7 @@ router.post(
 	})
 );
 
-router.post("/logout", (req, res, next) => {
+router.post("/logout", isAuth, (req, res, next) => {
 	if (req.session) {
 		req.logOut();
 		res.clearCookie("connect.sid", { path: "/" });
