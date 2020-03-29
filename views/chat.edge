@@ -2,11 +2,11 @@
 @section('main')
     <div class="chat">
         <div id="sidebar" class="chat__sidebar">
-            <div class="sidebar-header">
-                <img src="/img/avatar.svg" alt="">
-                <h1 class="room-title">Chats</h1>
-                <form action="/logout" method="post">
-                    <button type="submit" name="submit">Logout</button>
+            <div class="sidebar-header raw">
+                <img class="col" src="/img/avatar.svg" alt="">
+                <h1 class="room-title col" style="margin-bottom: 0px">Chats</h1>
+                <form action="/logout" method="post" class="col">
+                    <button class="logout" type="submit" name="submit"><i class="fas fa-sign-out-alt"></i></button>
                 </form>
             </div>
             <div class="sidebar-body">

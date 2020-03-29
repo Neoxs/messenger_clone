@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     res.render('chat')
 })
 
-router.post('/add-friend/:id', async (req, res) => {
+router.get('/add-friend/:id', async (req, res) => {
     const id = req.params.id
     try {
         const user = await User.findById(req.user._id)

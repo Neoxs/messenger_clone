@@ -15,6 +15,10 @@ input {
     font-size: 14px;
 }
 
+ul,p {
+    margin: 0px;
+}
+
 body {
     line-height: 1.4;
     color: #333333;
@@ -56,6 +60,14 @@ input {
 
 button {
     cursor: pointer;
+    padding: 0px;
+    border: none;
+    color: white;
+    background-color: white;
+}
+
+ .compose button {
+    cursor: pointer;
     padding: 12px;
     background: #7C5CBF;
     border: none;
@@ -64,7 +76,7 @@ button {
     transition: background .3s ease;
 }
 
-button:hover {
+.compose button:hover {
     background: #6b47b8;
 }
 
@@ -130,7 +142,11 @@ button:disabled {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: 12px;
+}
+
+.logout {
+    background: none;
+    color: black
 }
 
 .chat__sidebar .sidebar-header .sidebar-search-box {
@@ -183,11 +199,24 @@ svg.svg-inline--fa.fa-search.fa-w-16 {
 }
 
 /* Conversations style */
+
+
 .conversations .conversation-list .conversation-list-item {
     background-color: white;
     padding: 10px 0px;
     overflow-x: hidden;
     box-sizing: inherit
+}
+
+.conversations .contacts-list .conversation-list-item {
+    background-color: white;
+    padding: 10px 0px;
+    overflow-x: hidden;
+    box-sizing: inherit
+}
+
+.conversation-list-item-active {
+    background-color: rgba(0, 0, 0, 0.04) !important
 }
 
 .conversation-list-item .conversation-img {
@@ -274,8 +303,8 @@ svg.svg-inline--fa.fa-search.fa-w-16 {
 }
 
 .message__name {
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 700;
+    font-size: 15px;
     margin-right: 8px;
 }
 

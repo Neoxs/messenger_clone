@@ -6,16 +6,13 @@ const $messageFormInput = $messageForm.querySelector('input')
 const $messageFormButton = $messageForm.querySelector('button')
 const $sendLocationButton = document.querySelector('#send-location')
 const $messages = document.querySelector('#messages')
-const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
+
 
 const $searchInput = document.querySelector('#search-bar-input')
 const $conversationList = document.querySelector('.convo-list')
 const $contactsList = document.querySelector('.contacts-list')
 
 
-// Templates
-const messageTemplate = document.querySelector('#message-template').innerHTML
-const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 
 //Options
 //const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -43,17 +40,25 @@ const autoscroll = () => {
     }
 }
 
-socket.on('message', (message) => {
-    //console.log(message)
-    const html = Mustache.render(messageTemplate, {
-        username: message.username,
-        message: message.text,
-        createdAt: moment(message.createdAt).format('hh:mm a')
-    })
+socket.on('message', (messages) => {
+    console.log(messages)
+    messages = Array.from(messages)
+    console.log(messages)
+    messages.forEach((message) => {
+        const html = `
+    <div class="message">
+        <p>
+            <span class="message__name">${message.username}</span>
+            <span class="message__meta">${moment(message.createdAt).format('h:mm a')}</span>
+        </p>
+        <p>${message.text}</p>
+    </div>
+    `
     
     $messages.insertAdjacentHTML('beforeend', html)
     
     autoscroll()
+    })
 })
 
 // socket.on('shareLocation', (data) => {
@@ -81,10 +86,11 @@ $messageForm.addEventListener('submit', (e) => {
     e.preventDefault()
 
     $messageFormButton.setAttribute('disabled', 'disabled')
-
+    const activeConvo = document.querySelector('.conversation-list-item-active')
     const message = e.target.elements.message.value
-
-    socket.emit('sendMessage', message, (error) => {
+    const roomId = activeConvo.dataset.roomid
+    const contactId = activeConvo.dataset.id
+    socket.emit('sendMessage', { message, roomId, contactId }, (error) => {
         $messageFormButton.removeAttribute('disabled')
         $messageFormInput.value = ''
         $messageFormInput.focus()
@@ -150,6 +156,12 @@ $searchInput.addEventListener('blur', (e) => {
 })
 
 $conversationList.addEventListener('click', (e) => {
+    $messages.innerHTML = ""
+    const convArr = Array.from(document.querySelectorAll('.conversation-list-item'))
+    convArr.forEach((el) => {
+        el.classList.remove('conversation-list-item-active')
+    })
+    e.target.closest('li').classList.add('conversation-list-item-active')
     console.log(e.target.closest('li').dataset.roomid)
     const contactId = e.target.closest('li').dataset.id
     const roomId = e.target.closest('li').dataset.roomid
@@ -165,9 +177,12 @@ const renderContact = (data) => {
             <div class="col-2 row align-self-center justify-content-center contact-img">
                 <img src="/img/fem-avatar.svg" alt="avatar">
             </div>
-            <div class="col row align-self-center contact-username">
+            <div class="col-8 row align-self-center contact-username">
                     ${user.username}  
             </div>
+            <button class="col-2 align-self-center" formaction="/chat">
+                <i class="fas fa-user-plus" style="color: black"></i>
+            </button>
         </li>
         `
         $contactsList.insertAdjacentHTML('beforeend', html)
