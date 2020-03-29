@@ -1,60 +1,60 @@
-// const socket = io()
+const socket = io()
 
-// // Elements
-// const $messageForm = document.querySelector('#message-form')
-// const $messageFormInput = $messageForm.querySelector('input')
-// const $messageFormButton = $messageForm.querySelector('button')
-// const $sendLocationButton = document.querySelector('#send-location')
-// const $messages = document.querySelector('#messages')
-// const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
+// Elements
+const $messageForm = document.querySelector('#message-form')
+const $messageFormInput = $messageForm.querySelector('input')
+const $messageFormButton = $messageForm.querySelector('button')
+const $sendLocationButton = document.querySelector('#send-location')
+const $messages = document.querySelector('#messages')
+const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 const $searchInput = document.querySelector('#search-bar-input')
 const $conversationList = document.querySelector('.convo-list')
 const $contactsList = document.querySelector('.contacts-list')
 
 
-// // Templates
-// const messageTemplate = document.querySelector('#message-template').innerHTML
-// const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
+// Templates
+const messageTemplate = document.querySelector('#message-template').innerHTML
+const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 
-// //Options
-// const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+//Options
+//const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
-// const autoscroll = () => {
-//     //New message element
-//     const $newMessage = $messages.lastElementChild
+const autoscroll = () => {
+    //New message element
+    const $newMessage = $messages.lastElementChild
 
-//     //Height of the new message
-//     const newMessageStyles = getComputedStyle($newMessage)
-//     const newMessageMargin = parseInt(newMessageStyles.marginBottom)
-//     const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
+    //Height of the new message
+    const newMessageStyles = getComputedStyle($newMessage)
+    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
 
-//     //Visible height
-//     const visibleHeight = $messages.offsetHeight
+    //Visible height
+    const visibleHeight = $messages.offsetHeight
 
-//     //Height of messages container
-//     const containerHeight = $messages.scrollHeight
+    //Height of messages container
+    const containerHeight = $messages.scrollHeight
 
-//     //How far have i scrolled
-//     const scrollOffset = $messages.scrollTop + visibleHeight
+    //How far have i scrolled
+    const scrollOffset = $messages.scrollTop + visibleHeight
 
-//     if(containerHeight - newMessageHeight <= scrollOffset) {
-//         $messages.scrollTop = $messages.scrollHeight
-//     }
-// }
+    if(containerHeight - newMessageHeight <= scrollOffset) {
+        $messages.scrollTop = $messages.scrollHeight
+    }
+}
 
-// socket.on('message', (message) => {
-//     //console.log(message)
-//     const html = Mustache.render(messageTemplate, {
-//         username: message.username,
-//         message: message.text,
-//         createdAt: moment(message.createdAt).format('hh:mm a')
-//     })
+socket.on('message', (message) => {
+    //console.log(message)
+    const html = Mustache.render(messageTemplate, {
+        username: message.username,
+        message: message.text,
+        createdAt: moment(message.createdAt).format('hh:mm a')
+    })
     
-//     $messages.insertAdjacentHTML('beforeend', html)
+    $messages.insertAdjacentHTML('beforeend', html)
     
-//     autoscroll()
-// })
+    autoscroll()
+})
 
 // socket.on('shareLocation', (data) => {
 //     //console.log()
@@ -77,25 +77,25 @@ const $contactsList = document.querySelector('.contacts-list')
 //     document.querySelector('.sidebar-chat-list').innerHTML = html
 // })
 
-// $messageForm.addEventListener('submit', (e) => {
-//     e.preventDefault()
+$messageForm.addEventListener('submit', (e) => {
+    e.preventDefault()
 
-//     $messageFormButton.setAttribute('disabled', 'disabled')
+    $messageFormButton.setAttribute('disabled', 'disabled')
 
-//     const message = e.target.elements.message.value
+    const message = e.target.elements.message.value
 
-//     socket.emit('sendMessage', message, (error) => {
-//         $messageFormButton.removeAttribute('disabled')
-//         $messageFormInput.value = ''
-//         $messageFormInput.focus()
+    socket.emit('sendMessage', message, (error) => {
+        $messageFormButton.removeAttribute('disabled')
+        $messageFormInput.value = ''
+        $messageFormInput.focus()
 
-//         if (error) {
-//             return console.log(error)
-//         }
+        if (error) {
+            return console.log(error)
+        }
 
-//         console.log('Message delivered!')
-//     })
-// })
+        console.log('Message delivered!')
+    })
+})
 
 // $sendLocationButton.addEventListener('click', () => {
 //     if (!navigator.geolocation) {
@@ -150,7 +150,10 @@ $searchInput.addEventListener('blur', (e) => {
 })
 
 $conversationList.addEventListener('click', (e) => {
-    
+    console.log(e.target.closest('li').dataset.roomid)
+    const contactId = e.target.closest('li').dataset.id
+    const roomId = e.target.closest('li').dataset.roomid
+    socket.emit('join', {contactId, roomId})
 })
 
 const renderContact = (data) => {

@@ -1,5 +1,7 @@
 //require needed modules
+const http = require('http')
 const express = require('express')
+const socketio = require('socket.io')
 const path = require('path')
 const edge = require('express-edge')
 const bodyParser = require("body-parser")
@@ -21,6 +23,8 @@ const store =  new MongoDBStore({
 
 //create the express app
 const app = express()
+const server = http.createServer(app)
+const io = socketio(server)
 
 //Defining paths for Express
 const publicDirectoryPath = path.join(__dirname, './public')
@@ -56,6 +60,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+//for testing
+require('./config/socket')
+
 //require routes
 const chatRoutes = require('./routes/chat')
 const authRoutes = require('./routes/auth')
@@ -75,6 +82,6 @@ const port = process.env.PORT || 3000
 
 
 //listening to requests
-app.listen(port, () => {
+server.listen(port, () => {
     console.log('Server is up on port ' + port)
 })
