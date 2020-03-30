@@ -2,6 +2,7 @@ const express = require('express')
 const router = new express.Router()
 const User = require('../models/user')
 const Room = require('../models/room')
+const Message = require('../models/message')
 
 //middlewares
 const isAuth = require('../middlewares/isAuth')
@@ -13,20 +14,52 @@ router.get('/', (req, res) => {
     res.redirect('/chat')
 })
 
-router.get('/add-friend/:id', isAuth, async (req, res) => {
-    const id = req.params.id
+router.post('/add-friend', isAuth, async (req, res) => {
+    //const id = req.params.id
+    const email = req.body.email
+    const text = req.body.message
     try {
+        const friend = await User.findOne({email})
+        //console.log(friend)
         const user = await User.findById(req.user._id)
-        const userFriend = await User.findById(id)
-        const room = await new Room()
-        room.clients = room.clients.concat([{userId: id}, {userId: req.user._id}])
-
-        user.friends = user.friends.concat({userId: id, roomId: room._id})
-        userFriend.friends = userFriend.friends.concat({userId: req.user._id, roomId: room._id})
-        await room.save()
-        await user.save()
-        await userFriend.save()
-        res.send(room)
+        let friendExist
+        if (friend) friendExist = await User.findOne({ $and: [ { _id: req.user._id }, { friends: { $elemMatch: { userId: friend._id } } } ] })
+        //console.log(friendExist)
+        if(!friend){
+            console.log("Sorry this contact doesn't exists !")
+            req.flash('warning', "Sorry this contact doesn't exists !")
+            res.redirect('/chat')
+        }else if(friend.email === user.email) {
+            //req.flash('warning', "You can't add yourself" )
+            console.log("You can't add yourself !")
+            req.flash('warning', "You can't add yourself !")
+            res.redirect('/chat')
+        } else if(friendExist) {
+            console.log("This person is already on ur friends list")
+            req.flash('warning', "This person is already on ur friends list")
+            res.redirect('/chat')
+        } else {
+            //console.log(user)
+            //const userFriend = await User.findById(id)
+            const room = await new Room()
+            room.clients = room.clients.concat([{userId: friend._id}, {userId: req.user._id}])
+            //console.log(room)
+            user.friends = user.friends.concat({userId: friend._id, roomId: room._id})
+            //console.log(user.friends)
+            //console.log(friend.friends)
+            friend.friends = friend.friends.concat({userId: req.user._id, roomId: room._id})
+            await room.save()
+            await user.save()
+            await friend.save()
+            const msg = await new Message()
+            msg.roomId = room._id
+            msg.from = req.user._id
+            msg.to = friend._id
+            msg.text = text
+            msg.createdAt = new Date().getTime()
+            await msg.save()  
+            res.redirect('/chat')
+        }
 
     }catch(err) {
         console.log(err.message)
@@ -42,7 +75,8 @@ router.get('/chat', isAuth, async(req, res) => {
             pageTitle: 'chat',
             user: user,
             contacts: user.friends,
-            isAuthenticated: req.isAuthenticated()
+            isAuthenticated: req.isAuthenticated(),
+            warning: req.flash('warning')[0]
         })
     }catch(err){
         console.log(err.message)
