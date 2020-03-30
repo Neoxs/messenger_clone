@@ -6,13 +6,13 @@ module.exports = (io) => {
     io.on('connection', (socket) => {
         console.log('new connection')
         //
-        console.log(socket.request.user)
+        //console.log(socket.request.user)
         socket.on('join', async ({ contactId, roomId }) => {
       
           socket.join(roomId)
 
           const msg = await loadMessages(roomId)
-          console.log(msg)  
+          //console.log(msg)  
           socket.emit('message', msg)
           //socket.broadcast.to(roomId).emit('message', generateMessage('Admin', `${req.user.username} has joined!`))
       
