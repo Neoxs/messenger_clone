@@ -17,7 +17,7 @@ exports.postSignup = async(req, res) => {
         res.redirect('/register')
     } else {
        delete req.body.confirmPassword
-       const user = new User(req.body)
+       const user = await new User(req.body)
  
        try {
              await user.save()

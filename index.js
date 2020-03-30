@@ -19,7 +19,7 @@ require('./config/mongoose')
 
 //MongoDBStore store object
 const store =  new MongoDBStore({
-  uri: 'mongodb://127.0.0.1:27017/chatwood',
+  uri: 'mongodb+srv://chatwood:123456789x@chatwood-7dqub.mongodb.net/test?retryWrites=true&w=majority',
   collection: 'sessions'
 })
 

@@ -27,17 +27,14 @@ router.post('/add-friend', isAuth, async (req, res) => {
         //console.log(friendExist)
         if(!friend){
             console.log("Sorry this contact doesn't exists !")
-            req.flash('warning', "Sorry this contact doesn't exists !")
-            res.redirect('/chat')
+            res.send({ warning: "Sorry this contact doesn't exists !" })
         }else if(friend.email === user.email) {
             //req.flash('warning', "You can't add yourself" )
             console.log("You can't add yourself !")
-            req.flash('warning', "You can't add yourself !")
-            res.redirect('/chat')
+            res.send({ warning: "You can't add yourself !" })
         } else if(friendExist) {
             console.log("This person is already on ur friends list")
-            req.flash('warning', "This person is already on ur friends list")
-            res.redirect('/chat')
+            res.send({ warning: "This person is already on ur friends list" })
         } else {
             //console.log(user)
             //const userFriend = await User.findById(id)
@@ -58,7 +55,7 @@ router.post('/add-friend', isAuth, async (req, res) => {
             msg.text = text
             msg.createdAt = new Date().getTime()
             await msg.save()  
-            res.redirect('/chat')
+            res.send({ success: "Congrats your friends request was sent !" })
         }
 
     }catch(err) {

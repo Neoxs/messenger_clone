@@ -6,7 +6,9 @@ const $messageFormInput = $messageForm.querySelector('input')
 const $messageFormButton = $messageForm.querySelector('button')
 const $sendLocationButton = document.querySelector('#send-location')
 const $messages = document.querySelector('#messages')
-
+const $addFriendForm = document.querySelector('.friend-request')
+const $addFormBtn = document.querySelector('.friend-request-btn')
+const $addModalBody = document.querySelector('.modal-body')
 
 const $searchInput = document.querySelector('#search-bar-input')
 const $conversationList = document.querySelector('.convo-list')
@@ -168,6 +170,59 @@ $conversationList.addEventListener('click', (e) => {
     socket.emit('join', {contactId, roomId})
 })
 
+$addFormBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    console.log("i'm here !")
+    const email = document.querySelector('#recipient-email').value
+    const message = document.querySelector('#message-text').value
+    if(!email || !message){
+        const html = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Yoo dude !</strong> You should fill this fields first.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        `
+        $addFriendForm.insertAdjacentHTML('beforebegin', html)
+    }else{
+        const body = { email, message }
+        const res = fetch(`/add-friend`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        }).then((res) => {
+            return res.json()
+        }).then((data) => {
+            //console.log(data)
+            let html
+            if (data.warning) {
+                html = `
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Yoo dude !</strong> ${data.warning}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                `
+            }else if (data.success){
+                html = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Yoo dude !</strong> ${data.success}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                `
+            }
+            
+            $addFriendForm.insertAdjacentHTML('beforebegin', html)
+        })
+    }
+})
+
 const renderContact = (data) => {
     $contactsList.innerHTML = ""
 
@@ -188,6 +243,7 @@ const renderContact = (data) => {
         $contactsList.insertAdjacentHTML('beforeend', html)
     });
 }
+
 
 // socket.emit('join', { username, room }, (error) => {
 //     if(error) {
